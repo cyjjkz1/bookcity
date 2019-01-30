@@ -27,8 +27,9 @@ def create_app(config_name):
     from logging.handlers import RotatingFileHandler
     # Formatter
     formatter = logging.Formatter(
-        '%(asctime)s %(levelname)s %(process)d %(thread)d %(pathname)s %(lineno)s ---> %(message)i'
-    )
+        '%(asctime)s %(levelname)s %(process)d %(thread)d '
+        '%(pathname)s %(lineno)s %(message)s')
+
     file_handler_info = RotatingFileHandler(filename=config[config_name].LOG_PATH_INFO)
     file_handler_info.setFormatter(formatter)
     app.logger.addHandler(file_handler_info)

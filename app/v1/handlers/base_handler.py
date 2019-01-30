@@ -46,7 +46,7 @@ class BaseHandler(Resource):
         try:
             if request.method == 'GET':
                 req_params = request.args
-            elif request.methos == 'POST':
+            elif request.method == 'POST':
                 req_params = request.json
             else:
                 raise HandlerException(RESP_CODE.MEHTOD_NOT_FOUND, error_message=request.method)
@@ -71,7 +71,7 @@ class BaseHandler(Resource):
             check_fileds = self.POST_FIELDS
         else:
             pass
-        
+
         dp = DataPacker(check_fileds)
         try:
             dp.run(
