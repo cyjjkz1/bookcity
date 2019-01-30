@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 from flask import Blueprint
-from flask_resuful import Api
+from flask_restful import Api
 from handlers.post_company_handler import PostCompanyHandler
 
 
