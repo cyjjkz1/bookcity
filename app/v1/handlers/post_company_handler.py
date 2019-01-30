@@ -2,14 +2,14 @@
 # -*- coding:utf-8 -*-
 from flask import request
 from ..models.supply import PostCompany
-from base_handler import BaseHandler, HandlerException
-from data_packer import RequiredField, OptionalField
+from base_handler import BaseHandler
+from data_packer import RequiredField
 from data_packer.checker import (
-    ReChecker, TypeChecker
+    ReChecker
 )
 from ..constant import RESP_CODE, RESP_ERR_MSG
 
-POST_Name = RequiredField('post_name', checker=ReChecker(r'[\u4e00-\u9fa5]{2, 10}'))
+POST_Name = RequiredField('post_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2, 10})'))
 POST_Price = RequiredField('post_price', checker=ReChecker(r'[0-9]{1,4}'))
 POST_id = RequiredField('post_id', checker=ReChecker(r'[0-9]{1,}'))
 
@@ -24,7 +24,7 @@ class PostCompanyHandler(BaseHandler):
 
     def get(self):
         self.handle()
-        
+
     def post(self):
         self.handle()
 

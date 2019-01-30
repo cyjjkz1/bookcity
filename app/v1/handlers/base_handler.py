@@ -5,7 +5,7 @@ from data_packer import DataPacker, err
 from data_packer.container import DictContainer
 from flask import current_app as app
 from flask_restful import Resource
-from flask import request, jsonify
+from flask import request, jsonify, abort
 from app.v1.constant import RESP_CODE, RESP_ERR_MSG
 
 
@@ -23,7 +23,7 @@ class BaseHandler(Resource):
         try:
             app.logger.info('<<<< Start %s.%s>>>>', self.__class__.__module__, self.__class__.__name__)
             ret = self._handle(*args, **kwargs)
-            log.info('<<<< END %s.%s >>>>', self.__class__.__module__, self.__class__.__name__)
+            app.logger.info('<<<< END %s.%s >>>>', self.__class__.__module__, self.__class__.__name__)
             return jsonify(ret)
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
@@ -60,7 +60,7 @@ class BaseHandler(Resource):
         except BaseException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
-            return self.request_finish(RESP_CODE.INNER_SERVICE_ERR)
+            return abort(500)
 
     def check_params(self, params):
         ret = {}
@@ -73,28 +73,29 @@ class BaseHandler(Resource):
             pass
 
         dp = DataPacker(check_fileds)
+        app.logger.info(params)
         try:
             dp.run(
-                DataContainer(params),
-                DataContainer(ret)
+                DictContainer(params),
+                DictContainer(ret)
             )
         except err.DataPackerCheckError as e:
-            app.logger.warn(trackback.format_exc())
+            app.logger.warn(traceback.format_exc())
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {}'.format(e.src_name)
+            app.logger.warn(err_msg)
             return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
         except err.DataPackerSrcKeyNotFoundError as e:
-            app.logger.warn(trackback.format_exc())
+            app.logger.warn(traceback.format_exc())
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' 缺少参数: {}'.format(e.src_name)
             return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
         except err.DataPackerError as e:
-            app.logger.warn(trackback.format_exc())
+            app.logger.warn(traceback.format_exc())
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '')
             return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
         finally:
             pass
         return ret
 
-    @staticmethod
     def request_finish(respcd, respmsg='', resperr='', **kwargs):
         if not resperr:
             resperr = RESP_ERR_MSG.get(respcd, '')
@@ -105,6 +106,6 @@ class BaseHandler(Resource):
         }
         resp.update(kwargs)
         app.logger.info('Response %s', resp)
-        return jsonif(resp)
+        return jsonify(resp)
 
 
