@@ -7,6 +7,7 @@ from config import config
 
 db = SQLAlchemy()
 
+
 def create_app(config_name):
     app = Flask(__name__)
 
@@ -18,7 +19,8 @@ def create_app(config_name):
     db.init_app(app)
 
     # 配置蓝图
-
+    from v1.urls import bp_post
+    app.register_blueprint(bp_post)
 
     # 配置日志
     import logging

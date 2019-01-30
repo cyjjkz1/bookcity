@@ -4,6 +4,7 @@
 from app import db
 from datetime import datetime
 
+
 class Banner(db.Model):
     __tablename__ = 'banner'
 
@@ -31,3 +32,7 @@ class Banner(db.Model):
             'create_time': self.create_time
         }
         return banner_dict
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()

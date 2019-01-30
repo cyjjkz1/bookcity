@@ -21,7 +21,6 @@ class Supply(db.Model):
     posts = db.relationship('PostCompany', secondary=supply_post,
                            backref=db.backref('supply_set', lazy='dynamic'))
 
-
     def __init__(self, name, mobile, address):
         self.name = name
         self.mobile = mobile
@@ -45,6 +44,9 @@ class Supply(db.Model):
 
         sup_dict['posts'] = posts
         return sup_dict
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 class PostCompany(db.Model):
@@ -63,20 +65,22 @@ class PostCompany(db.Model):
     def __str__(self):
         return '<PostCompany: {} {}>'.format(self.name, self.price)
 
-
-    def model_to_dict(self):
+    def model_to_dict(self, query_relation=False):
         post_dict = {
             'id': self.id,
             'name': self.name,
             'price': self.price
         }
 
-        supplys = []
-
-        if self.supplys is not None:
-            for supply in self.supplys:
-                supplys.append(supply.model_to_dict())
-
-        post_dict['supplys'] = supplys
+        if query_relation:
+            supplys = []
+            if self.supplys is not None:
+                for supply in self.supplys:
+                    supplys.append(supply.model_to_dict())
+            post_dict['supplys'] = supplys
         return post_dict
 
+    def save(self):
+        db.session.add(self)
+        db.session.flush()
+        db.session.commit()

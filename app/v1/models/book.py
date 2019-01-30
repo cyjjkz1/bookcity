@@ -4,6 +4,7 @@
 from app import db
 from datetime import datetime
 
+
 class Book(db.Model):
     __tablename__ = 'book'
 
@@ -70,4 +71,6 @@ class Book(db.Model):
 
         return book_dict
 
-
+    def save(self):
+        db.session.add(self)
+        db.session.commit()

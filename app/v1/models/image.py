@@ -4,6 +4,7 @@
 from app import db
 from datetime import datetime
 
+
 class Image(db.Model):
     __talbename__ = 'image'
     """
@@ -13,7 +14,6 @@ class Image(db.Model):
     name = db.Column(db.String(20), nullable=False)
     create_time = db.Column(db.DateTime, nullable=False, default=datetime.now)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
-
 
     def __init__(self, name, book_id, create_time=datetime.now()):
         self.name = name
@@ -32,3 +32,6 @@ class Image(db.Model):
         }
         return img_dict
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()

@@ -14,6 +14,7 @@ manager = Manager(app)
 
 migrate = Migrate(app, db)
 
+
 class CreateDB(Command):
     def run(self):
         db.create_all()
@@ -22,6 +23,7 @@ class CreateDB(Command):
 class AddDB(Command):
     def run(self):
         pass
+
 
 # 自定义命令
 manager.add_command('createdb', CreateDB)

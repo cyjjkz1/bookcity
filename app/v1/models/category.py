@@ -21,6 +21,7 @@ class AgeGroup(db.Model):
                                 backref=db.backref('age_set', lazy='dynamic')
                                 )
     books = db.relationship('Book', backref='age_set', lazy='dynamic')
+
     def __init__(self, name):
         self.name = name
 
@@ -39,6 +40,9 @@ class AgeGroup(db.Model):
 
         ag_dict['functions'] = funcs
         return ag_dict
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 class Function(db.Model):
@@ -72,3 +76,7 @@ class Function(db.Model):
 
         fun_dict['age_groups'] = ags
         return fun_dict
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
