@@ -56,7 +56,7 @@ class BaseHandler(Resource):
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
-            return self.request_finish(RESP_CODE.INNER_SERVICE_ERROR, error_message=e.respmsg)
+            raise e
         except BaseException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
