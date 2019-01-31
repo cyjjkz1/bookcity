@@ -4,7 +4,7 @@
 from flask import Blueprint
 from flask_restful import Api
 from handlers.post_company_handler import PostCompanyHandler
-from handlers.supply_handler import SupplyHandler
+from handlers.supply_handler import SupplyHandler, SupplySelectHandler
 
 
 bp_post = Blueprint('bp_post', __name__, url_prefix='/bookcity/v1/post_company')
@@ -23,3 +23,5 @@ api_supply = Api(bp_supply)
 api_supply.add_resource(SupplyHandler, '/query', endpoint='supply_query')
 
 api_supply.add_resource(SupplyHandler, '/add', endpoint='supply_add')
+
+api_supply.add_resource(SupplyHandler, '/add_post', endpoint='supply_add_post')
