@@ -31,7 +31,7 @@ class PostCompanyHandler(BaseHandler):
 
     def _handle(self, *args, **kwargs):
         params = self.parse_request_params()
-        app.logger.info('func=parse_request_params | ret_params = '.format(params))
+        app.logger.info('func=parse_request_params | parse_params = '.format(params))
         if request.method == 'GET':
             # 查询
             post = PostCompany.query.filter_by(id=params['post_id']).first()
