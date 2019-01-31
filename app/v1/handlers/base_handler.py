@@ -81,7 +81,7 @@ class BaseHandler(Resource):
                 DictContainer(params),
                 DictContainer(ret)
             )
-            return ret.row_data()
+            return ret
 
         except err.DataPackerCheckError as e:
             app.logger.warn(traceback.format_exc())
