@@ -24,10 +24,15 @@ class BaseHandler(Resource):
         try:
             app.logger.info('<<<< Start %s.%s>>>>', self.__class__.__module__, self.__class__.__name__)
             ret = self._handle(*args, **kwargs)
+            app.logger.info('func=_handle|_handle_ret_params=%s', ret)
+            ret = self.request_finish(respcd=RESP_CODE.SUCCESS,
+                                      respmsg='',
+                                      resperr=RESP_ERR_MSG.get(RESP_CODE.SUCCESS),
+                                      data=ret)
+            app.logger.info('func=request_finish|request_finish_params=%s', ret)
             app.logger.info('<<<< END %s.%s >>>>', self.__class__.__module__, self.__class__.__name__)
-            return self.request_finish(respcd=RESP_CODE.SUCCESS,
-                                       resperr=RESP_ERR_MSG.get(RESP_CODE.SUCCESS),
-                                       data=ret)
+            return ret
+
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
             return self.request_finish(e.respcd, resperr=e.respmsg)
