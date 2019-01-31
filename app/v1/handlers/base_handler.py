@@ -79,6 +79,8 @@ class BaseHandler(Resource):
                 DictContainer(params),
                 DictContainer(ret)
             )
+            return ret.row_data()
+
         except err.DataPackerCheckError as e:
             app.logger.warn(traceback.format_exc())
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {} 校验错误'.format(e.src_name)
@@ -94,7 +96,6 @@ class BaseHandler(Resource):
             return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
         finally:
             pass
-        return ret
 
     def request_finish(self, respcd, respmsg='', resperr='', **kwargs):
         if not resperr:
