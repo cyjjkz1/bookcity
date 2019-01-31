@@ -6,7 +6,7 @@ from data_packer import DataPacker, err
 from data_packer.container import DictContainer
 from flask import current_app as app
 from flask_restful import Resource
-from flask import request, jsonify, abort
+from flask import request, abort
 from app.v1.constant import RESP_CODE, RESP_ERR_MSG
 
 
@@ -115,6 +115,6 @@ class BaseHandler(Resource):
         }
         resp.update(kwargs)
         app.logger.info('Response %s', resp)
-        return jsonify(resp)
+        return resp
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from flask import request
+from flask import request,jsonify
 from flask import current_app as app
 from ..models.supply import PostCompany
 from base_handler import BaseHandler, HandlerException
@@ -24,10 +24,10 @@ class PostCompanyHandler(BaseHandler):
     ]
 
     def get(self):
-        self.handle()
+        return jsonify(self.handle())
 
     def post(self):
-        self.handle()
+        return jsonify(self.handle())
 
     def _handle(self, *args, **kwargs):
         params = self.parse_request_params()
