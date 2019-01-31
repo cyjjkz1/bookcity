@@ -83,17 +83,19 @@ class BaseHandler(Resource):
 
         except err.DataPackerCheckError as e:
             app.logger.warn(traceback.format_exc())
+            app.logger.warn('{} 校验错误 {}'.format(e.src_name, type(e), str(e)))
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {} 校验错误'.format(e.src_name)
-            app.logger.warn(err_msg)
             raise HandlerException(RESP_CODE.PARAM_ERROR, respmsg=err_msg)
 
         except err.DataPackerSrcKeyNotFoundError as e:
             app.logger.warn(traceback.format_exc())
+            app.logger.warn('{} 校验错误 {}'.format(e.src_name, type(e), str(e)))
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' 缺少参数: {}'.format(e.src_name)
             raise HandlerException(RESP_CODE.PARAM_ERROR, respmsg=err_msg)
 
         except err.DataPackerError as e:
             app.logger.warn(traceback.format_exc())
+            app.logger.warn('{} 校验错误 {}'.format(e.src_name, type(e), str(e)))
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {} 字段错误'.format(e.src_name)
             raise HandlerException(RESP_CODE.PARAM_ERROR, respmsg=err_msg)
 
