@@ -25,7 +25,9 @@ class BaseHandler(Resource):
             app.logger.info('<<<< Start %s.%s>>>>', self.__class__.__module__, self.__class__.__name__)
             ret = self._handle(*args, **kwargs)
             app.logger.info('<<<< END %s.%s >>>>', self.__class__.__module__, self.__class__.__name__)
-            return jsonify(ret)
+            return self.request_finish(respcd=RESP_CODE.SUCCESS,
+                                       resperr=RESP_ERR_MSG.get(RESP_CODE.SUCCESS),
+                                       data=ret)
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
             return self.request_finish(e.respcd, resperr=e.respmsg)
