@@ -24,10 +24,14 @@ class PostCompanyHandler(BaseHandler):
     ]
 
     def get(self):
-        return jsonify(self.handle())
+        get_ret = self.handle(())
+        if get_ret:
+            return jsonify(self.handle())
 
     def post(self):
-        return jsonify(self.handle())
+        get_ret = self.handle(())
+        if get_ret:
+            return jsonify(self.handle())
 
     def _handle(self, *args, **kwargs):
         params = self.parse_request_params()
