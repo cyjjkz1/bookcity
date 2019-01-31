@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from flask import request,jsonify
+import traceback
+from flask import request, jsonify
 from flask import current_app as app
 from ..models.supply import PostCompany
 from base_handler import BaseHandler, HandlerException

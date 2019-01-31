@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from traceback
+import traceback
 from flask import request,jsonify, abort
 from flask import current_app as app
 from ..models.supply import Supply, PostCompany
