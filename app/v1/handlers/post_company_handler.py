@@ -35,7 +35,10 @@ class PostCompanyHandler(BaseHandler):
         if request.method == 'GET':
             # 查询
             post = PostCompany.query.filter_by(id=params['post_id']).first()
-            return post.model_to_dict(query_relation=False)
+            if post:
+                return post.model_to_dict(query_relation=False)
+            else:
+                raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
         elif request.method == 'POST':
             # 插入
             app

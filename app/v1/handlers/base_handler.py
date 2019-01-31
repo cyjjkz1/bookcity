@@ -78,7 +78,6 @@ class BaseHandler(Resource):
             pass
 
         dp = DataPacker(check_fileds)
-        app.logger.info(params)
         try:
             dp.run(
                 DictContainer(params),
