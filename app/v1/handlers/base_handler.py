@@ -31,7 +31,7 @@ class BaseHandler(Resource):
         except BaseException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
-            return self.request_finish(RESP_CODE.INNER_SERVICE_ERROR)
+            return abort(500)
 
     def _handle(self, *args, **kwargs):
         raise NotImplementedError()
@@ -85,15 +85,18 @@ class BaseHandler(Resource):
             app.logger.warn(traceback.format_exc())
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {} 校验错误'.format(e.src_name)
             app.logger.warn(err_msg)
-            return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
+            raise HandlerException(RESP_CODE.PARAM_ERROR, respmsg=err_msg)
+
         except err.DataPackerSrcKeyNotFoundError as e:
             app.logger.warn(traceback.format_exc())
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' 缺少参数: {}'.format(e.src_name)
-            return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
+            raise HandlerException(RESP_CODE.PARAM_ERROR, respmsg=err_msg)
+
         except err.DataPackerError as e:
             app.logger.warn(traceback.format_exc())
             err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {} 字段错误'.format(e.src_name)
-            return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
+            raise HandlerException(RESP_CODE.PARAM_ERROR, respmsg=err_msg)
+
         finally:
             pass
 
