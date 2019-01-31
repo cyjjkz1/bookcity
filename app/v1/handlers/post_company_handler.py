@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from flask import request
+from flask import current_app as app
 from ..models.supply import PostCompany
 from base_handler import BaseHandler
 from data_packer import RequiredField, converter
@@ -30,12 +31,14 @@ class PostCompanyHandler(BaseHandler):
 
     def _handle(self, *args, **kwargs):
         params = self.parse_request_params()
+        app.logger.info('func=parse_request_params | ret_params = '.format(params))
         if request.method == 'GET':
             # 查询
             post = PostCompany.query.filter_by(id=params['post_id']).first()
             return post.model_to_dict(query_relation=False)
         elif request.method == 'POST':
             # 插入
+            app
             post = PostCompany(name=params['post_name'], price=params['post_price'])
             return self.request_finish(RESP_CODE.SUCCESS, resperr=RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''), post_id=post.id)
         else:

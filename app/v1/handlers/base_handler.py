@@ -55,6 +55,7 @@ class BaseHandler(Resource):
                 app.logger.info('func=check_params|checked_req_param=%s', req_params)
                 checked_req_param = self.check_params(req_params)
                 app.logger.info('func=check_params|checked_req_param=%s', checked_req_param)
+                return checked_req_param
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
