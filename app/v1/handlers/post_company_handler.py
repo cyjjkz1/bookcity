@@ -41,7 +41,6 @@ class PostCompanyHandler(BaseHandler):
                 raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
         elif request.method == 'POST':
             # 插入
-            app
             post = PostCompany(name=params['post_name'], price=params['post_price'])
             post.save()
             if post.id:

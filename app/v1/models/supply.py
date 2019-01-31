@@ -18,8 +18,9 @@ class Supply(db.Model):
     address = db.Column(db.String(50), nullable=False)
 
     books = db.relationship('Book', backref='supply_set', lazy='dynamic')
-    posts = db.relationship('PostCompany', secondary=supply_post,
-                           backref=db.backref('supply_set', lazy='dynamic'))
+    posts = db.relationship('PostCompany',
+                            secondary=supply_post,
+                            backref=db.backref('supply_set', lazy='dynamic'))
 
     def __init__(self, name, mobile, address):
         self.name = name
@@ -29,23 +30,25 @@ class Supply(db.Model):
     def __str__(self):
         return '<Supply: {} {} {}>'.format(self.name, self.mobile, self.address)
 
-    def model_to_dict(self):
+    def model_to_dict(self, query_relation=False):
         sup_dict = {
             'id': self.id,
             'name': self.name,
             'mobile': self.mobile,
             'address': self.address
         }
+        if query_relation:
+            post_company = []
+            if self.posts is not None:
+                for post in self.posts:
+                    posts.append(post.model_to_dict())
 
-        posts = []
-        if(self.posts is not None):
-            for post in self.posts:
-                posts.append(post.model_to_dict())
-
-        sup_dict['posts'] = posts
+            sup_dict['posts'] = post_company
         return sup_dict
+
     def save(self):
         db.session.add(self)
+        db.session.flush()
         db.session.commit()
 
 

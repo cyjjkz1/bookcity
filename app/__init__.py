@@ -19,8 +19,9 @@ def create_app(config_name):
     db.init_app(app)
 
     # 配置蓝图
-    from v1.urls import bp_post
+    from v1.urls import bp_post, bp_supply
     app.register_blueprint(bp_post)
+    app.register_blueprint(bp_supply)
 
     # 配置日志
     import logging

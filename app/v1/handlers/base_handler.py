@@ -119,7 +119,6 @@ class BaseHandler(Resource):
             'resperr': resperr
         }
         resp.update(kwargs)
-        app.logger.info('Response %s', resp)
         return resp
 
 
