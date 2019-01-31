@@ -32,6 +32,7 @@ class SupplyHandler(BaseHandler):
     ]
     GET_FIELDS = [SelectorField(
         fields=[
+            OPTION_SUPPLY_id,
             OPTION_SUPPLY_Name,
             OPTION_SUPPLY_Mobile,
             OPTION_SUPPLY_Address,
@@ -42,20 +43,24 @@ class SupplyHandler(BaseHandler):
     def get(self):
         get_ret = self.handle(())
         if get_ret:
-            return jsonify(self.handle())
+            return jsonify(get_ret)
 
     def post(self):
-        get_ret = self.handle(())
-        if get_ret:
-            return jsonify(self.handle())
+        post_ret = self.handle(())
+        if post_ret:
+            return jsonify(post_ret)
 
     def _handle(self, *args, **kwargs):
         params = self.parse_request_params()
         if params is None:
             return app.logger.info('func=parse_request_params | 没有正确解析参数')
-        app.logger.info('func=parse_request_params | parse_params = '.format(params))
+        app.logger.info('func=parse_request_params | parse_type={} | parse_params = {}'.format(type(params), params))
         if request.method == 'GET':
-            pass
+            supply = Supply.query.filter_by(**params).first()
+            if supply:
+                return supply.model_to_dict(query_relation=False)
+            else:
+                raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
         elif request.method == 'POST':
             # 插入
             supply = Supply(name=params['supply_name'], mobile=params['supply_mobile'], address=params['supply_address'])
