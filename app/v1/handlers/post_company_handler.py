@@ -9,7 +9,7 @@ from data_packer.checker import (
 )
 from ..constant import RESP_CODE, RESP_ERR_MSG
 
-POST_Name = RequiredField('post_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2, 10})'))
+POST_Name = RequiredField('post_name', checker=ReChecker(ur'[\u4e00-\u9fa5]{2, 10}'))
 POST_Price = RequiredField('post_price', checker=ReChecker(r'[0-9]{1,4}'))
 POST_id = RequiredField('post_id', checker=ReChecker(r'[0-9]{1,}'))
 

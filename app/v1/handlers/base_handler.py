@@ -31,7 +31,7 @@ class BaseHandler(Resource):
         except BaseException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
-            return self.request_finish(RESP_CODE.INNER_SERVICE_ERR)
+            return self.request_finish(RESP_CODE.INNER_SERVICE_ERROR)
 
     def _handle(self, *args, **kwargs):
         raise NotImplementedError()
@@ -56,7 +56,7 @@ class BaseHandler(Resource):
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
-            return self.request_finish(RESP_CODE.INNER_SERVICE_ERR, error_message=e.respmsg)
+            return self.request_finish(RESP_CODE.INNER_SERVICE_ERROR, error_message=e.respmsg)
         except BaseException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
@@ -81,7 +81,7 @@ class BaseHandler(Resource):
             )
         except err.DataPackerCheckError as e:
             app.logger.warn(traceback.format_exc())
-            err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {}'.format(e.src_name)
+            err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {} 校验错误'.format(e.src_name)
             app.logger.warn(err_msg)
             return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
         except err.DataPackerSrcKeyNotFoundError as e:
@@ -90,13 +90,13 @@ class BaseHandler(Resource):
             return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
         except err.DataPackerError as e:
             app.logger.warn(traceback.format_exc())
-            err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '')
+            err_msg = RESP_ERR_MSG.get(RESP_CODE.PARAM_ERROR, '') + ' : {} 字段错误'.format(e.src_name)
             return self.request_finish(respcd=RESP_CODE.PARAM_ERROR, resperr=err_msg)
         finally:
             pass
         return ret
 
-    def request_finish(respcd, respmsg='', resperr='', **kwargs):
+    def request_finish(self, respcd, respmsg='', resperr='', **kwargs):
         if not resperr:
             resperr = RESP_ERR_MSG.get(respcd, '')
         resp = {
