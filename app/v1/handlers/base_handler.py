@@ -33,6 +33,8 @@ class BaseHandler(Resource):
                 app.logger.info('func=request_finish|request_finish_params=%s', ret)
                 app.logger.info('<<<< END %s.%s >>>>', self.__class__.__module__, self.__class__.__name__)
                 return ret
+            else:
+                app.logger.info('func=handle| 没有返回处理结果')
 
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())

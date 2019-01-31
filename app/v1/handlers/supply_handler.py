@@ -51,6 +51,8 @@ class SupplyHandler(BaseHandler):
 
     def _handle(self, *args, **kwargs):
         params = self.parse_request_params()
+        if params is None:
+            return app.logger.info('func=parse_request_params | 没有正确解析参数')
         app.logger.info('func=parse_request_params | parse_params = '.format(params))
         if request.method == 'GET':
             pass
