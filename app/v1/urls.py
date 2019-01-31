@@ -24,4 +24,4 @@ api_supply.add_resource(SupplyHandler, '/query', endpoint='supply_query')
 
 api_supply.add_resource(SupplyHandler, '/add', endpoint='supply_add')
 
-api_supply.add_resource(SupplyHandler, '/add_post_company', endpoint='supply_add_post')
+api_supply.add_resource(SupplySelectHandler, '/add_post_company', endpoint='supply_add_post')
