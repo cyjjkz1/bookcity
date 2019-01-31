@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import traceback
+import json
 from data_packer import DataPacker, err
 from data_packer.container import DictContainer
 from flask import current_app as app
@@ -47,7 +48,7 @@ class BaseHandler(Resource):
             if request.method == 'GET':
                 req_params = request.args
             elif request.method == 'POST':
-                req_params = request.json
+                req_params = json.loads(request.data)
             else:
                 raise HandlerException(RESP_CODE.MEHTOD_NOT_FOUND, error_message=request.method)
             if check_param:
