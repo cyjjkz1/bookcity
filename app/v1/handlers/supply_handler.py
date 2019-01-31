@@ -5,7 +5,7 @@ from flask import request,jsonify
 from flask import current_app as app
 from ..models.supply import Supply
 from base_handler import BaseHandler, HandlerException
-from data_packer import RequiredField, OptionalField, converter
+from data_packer import RequiredField, OptionalField, SelectorField, converter
 from data_packer.checker import (
     ReChecker
 )
@@ -52,7 +52,7 @@ class SupplyHandler(BaseHandler):
             pass
         elif request.method == 'POST':
             # 插入
-            supply = Supply(name=params['supply_name'], mobile=params['supply_mobild'], address=params['supply_address'])
+            supply = Supply(name=params['supply_name'], mobile=params['supply_mobile'], address=params['supply_address'])
             supply.save()
             if supply.id:
                 return {'supply_id': supply.id}
