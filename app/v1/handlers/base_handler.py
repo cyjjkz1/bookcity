@@ -52,6 +52,7 @@ class BaseHandler(Resource):
             else:
                 raise HandlerException(RESP_CODE.MEHTOD_NOT_FOUND, error_message=request.method)
             if check_param:
+                app.logger.info('func=check_params|checked_req_param=%s', req_params)
                 checked_req_param = self.check_params(req_params)
                 app.logger.info('func=check_params|checked_req_param=%s', checked_req_param)
         except HandlerException as e:
