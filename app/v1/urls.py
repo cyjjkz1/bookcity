@@ -18,7 +18,7 @@ api_post.add_resource(PostCompanyHandler, '/add', endpoint='post_add')
 
 bp_supply = Blueprint('bp_supply', __name__, url_prefix='/bookcity/v1/supply')
 
-api_supply = Api(bp_post)
+api_supply = Api(bp_supply)
 
 api_supply.add_resource(SupplyHandler, '/query', endpoint='supply_query')
 
