@@ -10,7 +10,7 @@ from data_packer.checker import (
     ReChecker
 )
 from ..constant import RESP_CODE, RESP_ERR_MSG
-
+from app import db
 
 BOOK_Name = RequiredField('name', checker=ReChecker(ur'([\u4e00-\u9fa5]{1,30})'))
 BOOK_Price = RequiredField('price', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,4}'))
@@ -111,4 +111,5 @@ class BookHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
+            db.session.rollback()
             raise e

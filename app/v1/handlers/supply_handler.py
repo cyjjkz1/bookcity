@@ -10,6 +10,7 @@ from data_packer.checker import (
     ReChecker
 )
 from ..constant import RESP_CODE, RESP_ERR_MSG
+from app import db
 
 SUPPLY_Name = RequiredField('supply_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,30})'))
 SUPPLY_Mobile = RequiredField('supply_mobile', checker=ReChecker(r'1[0-9]{10}'))
@@ -84,6 +85,7 @@ class SupplyHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
+            db.session.rollback()
             raise e
 
 
@@ -118,4 +120,5 @@ class SupplySelectHandler(BaseHandler):
             supply.save()
             return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''))
         except BaseException as e:
+            db.session.rollback()
             raise e

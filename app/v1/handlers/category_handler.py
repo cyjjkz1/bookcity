@@ -11,9 +11,9 @@ from data_packer.checker import (
     ReChecker
 )
 from ..constant import RESP_CODE, RESP_ERR_MSG
+from app import db
 
-# id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-# name = db.Column(db.String(10), nullable=False)
+
 AGE_Name = RequiredField('age_name', checker=ReChecker(ur'([~0-9\u4e00-\u9fa5]{2,10})'))
 FUNCTION_Name = RequiredField('func_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,10})'))
 
@@ -79,6 +79,7 @@ class AgeGroupHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
+            db.session.rollback()
             raise e
 
 
@@ -128,6 +129,7 @@ class FunctionHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
+            db.session.rollback()
             raise e
 
 
@@ -164,4 +166,5 @@ class AgeGroupAddFuncHandler(BaseHandler):
             age.save()
             return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''))
         except BaseException as e:
+            db.session.rollback()
             raise e

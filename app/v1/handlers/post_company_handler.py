@@ -9,7 +9,7 @@ from data_packer import RequiredField, converter
 from data_packer.checker import (
     ReChecker
 )
-
+from app import db
 from ..constant import RESP_CODE, RESP_ERR_MSG
 
 POST_Name = RequiredField('post_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,30})'))
@@ -57,4 +57,5 @@ class PostCompanyHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
+            db.session.rollback()
             raise e
