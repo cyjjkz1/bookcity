@@ -19,10 +19,11 @@ def create_app(config_name):
     db.init_app(app)
 
     # 配置蓝图
-    from v1.urls import bp_post, bp_supply
+    from v1.urls import bp_post, bp_supply, bp_category, bp_book
     app.register_blueprint(bp_post)
     app.register_blueprint(bp_supply)
-
+    app.register_blueprint(bp_category)
+    app.register_blueprint(bp_book)
     # 配置日志
     import logging
     from logging.handlers import RotatingFileHandler

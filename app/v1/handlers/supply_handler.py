@@ -11,11 +11,6 @@ from data_packer.checker import (
 )
 from ..constant import RESP_CODE, RESP_ERR_MSG
 
-# id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-# name = db.Column(db.String(30), nullable=False)
-# mobile = db.Column(db.String(11), nullable=False)
-# address = db.Column(db.String(50), nullable=False)
-
 SUPPLY_Name = RequiredField('supply_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,30})'))
 SUPPLY_Mobile = RequiredField('supply_mobile', checker=ReChecker(r'1[0-9]{10}'))
 SUPPLY_Address = RequiredField('supply_address', checker=ReChecker(ur'([a-z0-9\u4e00-\u9fa5]{2,50})'))
@@ -123,6 +118,7 @@ class SupplySelectHandler(BaseHandler):
 
             supply.posts = [post]
             supply.save()
+            return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''))
         except BaseException as e:
             app.logger.warn(traceback.format_exc())
             app.logger.warn(str(e))

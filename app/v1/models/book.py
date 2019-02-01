@@ -3,6 +3,9 @@
 
 from app import db
 from datetime import datetime
+from supply import Supply
+from category import AgeGroup
+from flask import current_app as app
 
 
 class Book(db.Model):
@@ -24,12 +27,11 @@ class Book(db.Model):
     images = db.relationship('Image', backref='book_set', lazy='dynamic')
     banner = db.relationship('Banner', backref='book_info', lazy='dynamic')
 
-    def __init__(self, name, price, postage, details,
+    def __init__(self, name, price, details,
                  stock, choicest, supply_id, age_group_id,
                  function_id, create_time=datetime.now()):
         self.name = name
         self.price = price
-        self.postage = postage
         self.details = details
         self.stock = stock
         self.choicest = choicest
@@ -38,20 +40,17 @@ class Book(db.Model):
         self.age_group_id = age_group_id
         self.function_id = function_id
 
-
     def __str__(self):
-        return "<Book: {} {} {} {} {} {}>".format(self.name, self.price, self.postage, self.details,
+        return "<Book: {} {} {} {} {} {}>".format(self.name, self.price, self.details,
                                                   self.stock, self.choicest, self.create_time,
                                                   self.supply_id, self.age_group_id, self.function_id
                                                   )
 
-
-    def model_to_dict(self):
+    def model_to_dict(self, query_img=False, query_supply=False, query_category=False):
         book_dict = {
             'id': self.id,
             'name': self.name,
             'price': self.price,
-            'postage': self.postage,
             'details': self.details,
             'stock': self.stock,
             'choicest': self.choicest,
@@ -60,17 +59,30 @@ class Book(db.Model):
             'age_group_id': self.age_group_id,
             'function_id': self.function_id
         }
+        if query_img:
+            imgs = []
+            if self.images is not None:
+                for img in self.images:
+                    imgs.append(img.model_to_dict())
+            book_dict['images'] = imgs
 
-        imgs = []
+        if query_supply:
+            # 使用一对多的反向查询
+            supply = self.supply_set.first()
+            if supply is not None:
+                book_dict['supply'] = supply.model_to_dict(query_relation=True)
+            else:
+                book_dict['supply'] = {}
 
-        if (self.images is not None):
-            for img in self.images:
-                imgs.append(img.model_to_dict())
-
-        book_dict['images'] = imgs
-
+        if query_category:
+            age = self.function_set.first()
+            if age is not None:
+                book_dict['category'] = age.model_to_dict(query_relation=True)
+            else:
+                book_dict['category'] = {}
         return book_dict
 
     def save(self):
         db.session.add(self)
+        db.session.flush()
         db.session.commit()

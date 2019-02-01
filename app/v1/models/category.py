@@ -28,18 +28,19 @@ class AgeGroup(db.Model):
     def __str__(self):
         return '<AgeGroup: {}>'.format(self.name)
 
-    def model_to_dict(self):
+    def model_to_dict(self, query_relation=False):
         ag_dict = {
             'id': self.id,
             'name': self.name
         }
-        funcs = []
-        if self.functions is not None:
-            for func in self.functions:
-                funcs.append(func.model_to_dict())
-
-        ag_dict['functions'] = funcs
+        if query_relation:
+            funcs = []
+            if self.functions is not None:
+                for func in self.functions:
+                    funcs.append(func.model_to_dict())
+            ag_dict['functions'] = funcs
         return ag_dict
+
     def save(self):
         db.session.add(self)
         db.session.commit()
@@ -64,17 +65,18 @@ class Function(db.Model):
     def __str__(self):
         return '<Function: {}>'.format(self.name)
 
-    def model_to_dict(self):
+    def model_to_dict(self, query_relation=False):
         fun_dict = {
             'id': self.id,
             'name': self.name
         }
-        ags = []
-        if self.age_groups is not None:
-            for ag in self.age_groups:
-                ags.append(ag.model_to_dict())
+        if query_relation:
+            ags = []
+            if self.age_groups is not None:
+                for ag in self.age_groups:
+                    ags.append(ag.model_to_dict())
 
-        fun_dict['age_groups'] = ags
+            fun_dict['age_groups'] = ags
         return fun_dict
     
     def save(self):
