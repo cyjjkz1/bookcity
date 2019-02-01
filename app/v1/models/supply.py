@@ -4,6 +4,7 @@
 from app import db
 
 supply_post = db.Table('supply_post',
+                       db.Column('id', db.Integer, primary_key=True, autoincrement=True),
                        db.Column('sup_id', db.Integer, db.ForeignKey('supply.id'), nullable=False),
                        db.Column('post_id', db.Integer, db.ForeignKey('post_company.id'), nullable=False)
                        )
