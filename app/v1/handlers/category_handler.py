@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import traceback
-from flask import request,jsonify, abort
+from flask import request, jsonify, abort
 from flask import current_app as app
 from ..models.category import AgeGroup, Function
 from base_handler import BaseHandler, HandlerException
