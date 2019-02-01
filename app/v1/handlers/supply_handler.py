@@ -20,14 +20,26 @@ SUPPLY_Name = RequiredField('supply_name', checker=ReChecker(ur'([\u4e00-\u9fa5]
 SUPPLY_Mobile = RequiredField('supply_mobile', checker=ReChecker(r'1[0-9]{10}'))
 SUPPLY_Address = RequiredField('supply_address', checker=ReChecker(ur'([a-z0-9\u4e00-\u9fa5]{2,50})'))
 
-OPTION_SUPPLY_id = OptionalField(src_name='supply_id', dst_name='id', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,}'))
-OPTION_SUPPLY_Name = OptionalField(src_name='supply_name', dst_name='name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,30})'))
-OPTION_SUPPLY_Mobile = OptionalField(src_name='supply_mobile', dst_name='mobile', checker=ReChecker(r'1[0-9]{10}'))
-OPTION_SUPPLY_Address = OptionalField(src_name='supply_address', dst_name='address', checker=ReChecker(ur'([a-z0-9\u4e00-\u9fa5]{2,30})'))
+OPTION_SUPPLY_id = OptionalField(src_name='supply_id',
+                                 dst_name='id',
+                                 converter=converter.TypeConverter(str),
+                                 checker=ReChecker(r'[0-9]{1,}'))
+OPTION_SUPPLY_Name = OptionalField(src_name='supply_name',
+                                   dst_name='name',
+                                   checker=ReChecker(ur'([\u4e00-\u9fa5]{2,30})'))
+OPTION_SUPPLY_Mobile = OptionalField(src_name='supply_mobile',
+                                     dst_name='mobile',
+                                     checker=ReChecker(r'1[0-9]{10}'))
+OPTION_SUPPLY_Address = OptionalField(src_name='supply_address',
+                                      dst_name='address',
+                                      checker=ReChecker(ur'([a-z0-9\u4e00-\u9fa5]{2,30})'))
 
-
-RELATION_SUPPLY_id = RequiredField(src_name='supply_id', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,}'))
-RELATION_POST_id = RequiredField(src_name='post_id', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,}'))
+RELATION_SUPPLY_id = RequiredField(src_name='supply_id',
+                                   converter=converter.TypeConverter(str),
+                                   checker=ReChecker(r'[0-9]{1,}'))
+RELATION_POST_id = RequiredField(src_name='post_id',
+                                 converter=converter.TypeConverter(str),
+                                 checker=ReChecker(r'[0-9]{1,}'))
 
 
 class SupplyHandler(BaseHandler):
