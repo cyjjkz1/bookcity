@@ -14,7 +14,6 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
     price = db.Column(db.String(30), nullable=False)
-    postage = db.Column(db.String(30), nullable=False)
     details = db.Column(db.String(100), nullable=False)
     stock = db.Column(db.Integer, nullable=False, default=0)
     choicest = db.Column(db.Integer, nullable=False, default=1)
