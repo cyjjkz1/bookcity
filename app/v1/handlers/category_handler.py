@@ -162,7 +162,7 @@ class AgeGroupAddFuncHandler(BaseHandler):
                 raise HandlerException(respcd=RESP_CODE.DB_ERROR,
                                        respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_QUERY_NOT_FOUND) + ' func_id {}'.format(
                                            params['func_id']))
-            app.logger.info('<Function>DB query result: {}'.format(post.model_to_dict(query_relation=False)))
+            app.logger.info('<Function>DB query result: {}'.format(func.model_to_dict(query_relation=False)))
 
             age.functions = [func]
             supply.save()
