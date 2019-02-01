@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import traceback
 import json
+from app import db
 from data_packer import DataPacker, err
 from data_packer.container import DictContainer
 from flask import current_app as app

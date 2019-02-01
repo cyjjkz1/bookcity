@@ -84,9 +84,7 @@ class SupplyHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            abort(500)
+            raise e
 
 
 class SupplySelectHandler(BaseHandler):
@@ -120,6 +118,4 @@ class SupplySelectHandler(BaseHandler):
             supply.save()
             return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''))
         except BaseException as e:
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            abort(500)
+            raise e

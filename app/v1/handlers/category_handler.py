@@ -79,9 +79,7 @@ class AgeGroupHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            abort(500)
+            raise e
 
 
 class FunctionHandler(BaseHandler):
@@ -130,9 +128,7 @@ class FunctionHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            abort(500)
+            raise e
 
 
 class AgeGroupAddFuncHandler(BaseHandler):
@@ -168,6 +164,4 @@ class AgeGroupAddFuncHandler(BaseHandler):
             age.save()
             return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''))
         except BaseException as e:
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            abort(500)
+            raise e

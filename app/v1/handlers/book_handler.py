@@ -111,13 +111,4 @@ class BookHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            abort(500)
-            # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-            # name = db.Column(db.String(30), nullable=False)
-            # price = db.Column(db.String(30), nullable=False)
-            # details = db.Column(db.String(100), nullable=False)
-            # stock = db.Column(db.Integer, nullable=False, default=0)
-            # choicest = db.Column(db.Integer, nullable=False, default=1)
-            # create_time = db.Column(db.DateTime, nullable=False, default=datetime.now)
+            raise e

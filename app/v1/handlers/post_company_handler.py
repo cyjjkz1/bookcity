@@ -3,12 +3,14 @@
 import traceback
 from flask import request, jsonify, abort
 from flask import current_app as app
+from flask import 
 from ..models.supply import PostCompany
 from base_handler import BaseHandler, HandlerException
 from data_packer import RequiredField, converter
 from data_packer.checker import (
     ReChecker
 )
+
 from ..constant import RESP_CODE, RESP_ERR_MSG
 
 POST_Name = RequiredField('post_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,30})'))
@@ -56,6 +58,4 @@ class PostCompanyHandler(BaseHandler):
             else:
                 abort(404)
         except BaseException as e:
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            abort(500)
+            raise e
