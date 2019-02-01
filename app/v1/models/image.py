@@ -11,7 +11,7 @@ class Image(db.Model):
     书籍相关示例图片
     """
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(20), nullable=False, unique=True)
     create_time = db.Column(db.DateTime, nullable=False, default=datetime.now)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
 

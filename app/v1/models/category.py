@@ -15,7 +15,7 @@ class AgeGroup(db.Model):
     __tablename__ = 'age_group'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(10), nullable=False)
+    name = db.Column(db.String(10), nullable=False, unique=True)
 
     functions = db.relationship('Function',
                                 secondary=age_func,
@@ -51,7 +51,7 @@ class Function(db.Model):
     __tablename__ = 'function'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(10), nullable=False)
+    name = db.Column(db.String(10), nullable=False, unique=True)
 
     books = db.relationship('Book', backref='function_set', lazy='dynamic')
 

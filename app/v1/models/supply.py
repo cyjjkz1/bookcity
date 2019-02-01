@@ -14,8 +14,8 @@ class Supply(db.Model):
     __tablename__ = 'supply'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(30), nullable=False)
-    mobile = db.Column(db.String(11), nullable=False)
+    name = db.Column(db.String(30), nullable=False, unique=True)
+    mobile = db.Column(db.String(11), nullable=False, unique=True)
     address = db.Column(db.String(50), nullable=False)
 
     books = db.relationship('Book', backref='supply_set', lazy='dynamic')
@@ -56,7 +56,7 @@ class Supply(db.Model):
 class PostCompany(db.Model):
     __tablename__ = 'post_company'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(10), nullable=False)
+    name = db.Column(db.String(10), nullable=False, unique=True)
     price = db.Column(db.Integer, nullable=False)
 
     supplys = db.relationship('Supply', secondary=supply_post,

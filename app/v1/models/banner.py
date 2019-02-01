@@ -9,7 +9,7 @@ class Banner(db.Model):
     __tablename__ = 'banner'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(10), nullable=False)
+    title = db.Column(db.String(10), nullable=False, unique=True)
     validate = db.Column(db.Integer, nullable=False, default=0)
     create_time = db.Column(db.DateTime, nullable=False, default=datetime.now)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
