@@ -110,10 +110,17 @@ class SupplySelectHandler(BaseHandler):
             return app.logger.info('func=parse_request_params | 没有正确解析参数')
         app.logger.info('func=parse_request_params | parse_type={} | parse_params = {}'.format(type(params), params))
         try:
-            supply = Supply.query.filter_by(id=params['supply_id'])
-            app.logger.info('<Supply>DB query result: {}'.format(supply.model_to_dict(query_relation=True)))
-            post = PostCompany.query.filter_by(id=params['post_id'])
+            supply = Supply.query.filter_by(id=params['supply_id']).first()
+            if supply is None:
+                raise HandlerException(respcd=RESP_CODE.DB_QUERY_NOT_FOUND,
+                                       respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_QUERY_NOT_FOUND) + ' supply_id {}'.format(params['supply_id']))
+            app.logger.info('<Supply>DB query result: {}'.format(supply.model_to_dict(query_relation=False)))
+            post = PostCompany.query.filter_by(id=params['post_id']).first()
+            if post is None:
+                raise HandlerException(respcd=RESP_CODE.DB_ERROR,
+                                       respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_QUERY_NOT_FOUND) + ' supply_id {}'.format(params['post_id']))
             app.logger.info('<PostCompany>DB query result: {}'.format(post.model_to_dict(query_relation=False)))
+
             supply.posts = [post]
             supply.save()
         except BaseException as e:
