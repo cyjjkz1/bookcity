@@ -5,8 +5,8 @@ from app import db
 
 
 age_func = db.Table('age_func',
-                    db.Column('age_id', db.Integer, db.ForeignKey('age_group.id'), primary_key=True),
-                    db.Column('func_id', db.Integer, db.ForeignKey('function.id'), primary_key=True)
+                    db.Column('age_id', db.Integer, db.ForeignKey('age_group.id')),
+                    db.Column('func_id', db.Integer, db.ForeignKey('function.id'))
                     )
 
 
