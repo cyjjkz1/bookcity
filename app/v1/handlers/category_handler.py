@@ -158,7 +158,7 @@ class AgeGroupAddFuncHandler(BaseHandler):
                                            params['age_id']))
             app.logger.info('<AgeGroup>DB query result: {}'.format(age.model_to_dict(query_relation=False)))
             func = Function.query.filter_by(id=params['func_id']).first()
-            if post is None:
+            if func is None:
                 raise HandlerException(respcd=RESP_CODE.DB_ERROR,
                                        respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_QUERY_NOT_FOUND) + ' func_id {}'.format(
                                            params['func_id']))
