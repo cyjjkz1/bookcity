@@ -36,7 +36,7 @@ class PostCompanyHandler(BaseHandler):
 
     def _handle(self, *args, **kwargs):
         params = self.parse_request_params()
-        app.logger.info('func=parse_request_params | parse_params = '.format(params))
+        app.logger.info('func=parse_request_params | parse_params = {} '.format(params))
         try:
             if request.method == 'GET':
                 # 查询
