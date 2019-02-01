@@ -14,7 +14,7 @@ from ..constant import RESP_CODE, RESP_ERR_MSG
 
 # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 # name = db.Column(db.String(10), nullable=False)
-AGE_Name = RequiredField('age_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,10})'))
+AGE_Name = RequiredField('age_name', checker=ReChecker(ur'([~0-9\u4e00-\u9fa5]{2,10})'))
 FUNCTION_Name = RequiredField('func_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,10})'))
 
 OPTION_id = OptionalField(src_name='supply_id',
