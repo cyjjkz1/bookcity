@@ -3,7 +3,6 @@
 import traceback
 from flask import request, jsonify, abort
 from flask import current_app as app
-from flask import 
 from ..models.supply import PostCompany
 from base_handler import BaseHandler, HandlerException
 from data_packer import RequiredField, converter
