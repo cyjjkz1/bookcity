@@ -37,17 +37,10 @@ class BaseHandler(Resource):
                 return ret
             else:
                 app.logger.info('func=handle| 没有返回处理结果')
-
-        except err.MySQLError as e:
-            app.logger.warn("11111111111111111111111111111111111111111111111")
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            return self.request_finish(RESP_CODE.DB_ERROR, RESP_ERR_MSG.get(RESP_CODE.DB_ERROR, ''))
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
             return self.request_finish(e.respcd, resperr=e.respmsg)
         except BaseException as e:
-            app.logger.warn("222222222222222222222222222222222222222222222222")
             app.logger.warn(traceback.format_exc())
             app.logger.warn(e.message)
             return abort(500)

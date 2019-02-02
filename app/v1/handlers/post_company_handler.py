@@ -11,7 +11,6 @@ from data_packer.checker import (
 )
 from app import db
 from ..constant import RESP_CODE, RESP_ERR_MSG
-from pymysql import err
 
 POST_Name = RequiredField('post_name', checker=ReChecker(ur'([\u4e00-\u9fa5]{2,30})'))
 POST_Price = RequiredField('post_price', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,4}'))
@@ -57,11 +56,6 @@ class PostCompanyHandler(BaseHandler):
                     raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
             else:
                 abort(404)
-        except err.IntegrityError as e:
-            app.logger.warn("3333333333333333333333333333333333333333333333333")
-            app.logger.warn(traceback.format_exc())
-            app.logger.warn(str(e))
-            return self.request_finish(RESP_CODE.DB_ERROR, RESP_ERR_MSG.get(RESP_CODE.DB_ERROR, ''))
         except BaseException as e:
             db.session.rollback()
             raise e
