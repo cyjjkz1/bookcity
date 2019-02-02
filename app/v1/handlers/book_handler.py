@@ -15,7 +15,7 @@ from app import db
 BOOK_Name = RequiredField('name', checker=ReChecker(ur'([\u4e00-\u9fa5]{1,30})'))
 BOOK_Price = RequiredField('price', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,4}'))
 BOOK_Details = RequiredField('details', checker=ReChecker(ur'([\u4e00-\u9fa5]{10,100})'))
-BOOK_Stock = RequiredField('stock', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-1]{1}'))
+BOOK_Stock = RequiredField('stock', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,5}'))
 BOOK_Choicest = RequiredField('choicest', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-1]{1}'))
 
 
@@ -26,7 +26,7 @@ OPTION_id = OptionalField(src_name='supply_id',
 OPTION_Name = OptionalField('name', checker=ReChecker(ur'([\u4e00-\u9fa5]{1,30})'))
 OPTION_Price = OptionalField('price', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,4}'))
 OPTION_Details = OptionalField('details', checker=ReChecker(ur'([\u4e00-\u9fa5]{10,100})'))
-OPTION_Stock = OptionalField('stock', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-1]{1}'))
+OPTION_Stock = OptionalField('stock', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-9]{1,5}'))
 OPTION_Choicest = OptionalField('choicest', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-1]{1}'))
 
 
