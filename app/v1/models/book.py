@@ -27,22 +27,17 @@ class Book(db.Model):
     banner = db.relationship('Banner', backref='book_info', lazy='dynamic')
 
     def __init__(self, name, price, details,
-                 stock, choicest, supply_id, age_group_id,
-                 function_id, create_time=datetime.now()):
+                 stock, choicest, create_time=datetime.now()):
         self.name = name
         self.price = price
         self.details = details
         self.stock = stock
         self.choicest = choicest
         self.create_time = create_time
-        self.supply_id = supply_id
-        self.age_group_id = age_group_id
-        self.function_id = function_id
 
     def __str__(self):
         return "<Book: {} {} {} {} {} {}>".format(self.name, self.price, self.details,
-                                                  self.stock, self.choicest, self.create_time,
-                                                  self.supply_id, self.age_group_id, self.function_id
+                                                  self.stock, self.choicest, self.create_time
                                                   )
 
     def model_to_dict(self, query_img=False, query_supply=False, query_category=False):

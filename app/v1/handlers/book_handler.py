@@ -86,23 +86,24 @@ class BookHandler(BaseHandler):
                             price=params['price'],
                             details=params['details'],
                             stock=params['stock'],
-                            choicest=params['stock']
+                            choicest=params['stock'],
                             )
                 # 建立关系
                 supply = Supply.query.fiter_by(id=params['supply_id']).first()
-                if supply is not None:
-                    book.supply_set = supply
-                    app.logger.info('book add supply')
-
                 age = AgeGroup.query.fiter_by(id=params['age_id']).first()
-                if age is not None:
-                    book.age_set = age
-                    app.logger.info('book add age group')
-
                 func = Function.query.fiter_by(id=params['func_id']).first()
-                if func is not None:
-                    book.function_set = func
-
+                if supply is None:
+                    app.logger.info('Can not find supply with id = {}'.format(params['supply_id']))
+                    raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
+                if age is None:
+                    app.logger.info('Can not find age_group with id = {}'.format(params['age_id']))
+                    raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
+                if func is None:
+                    app.logger.info('Can not find function with id = {}'.format(params['func_id']))
+                    raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
+                book.supply_set.append(supply)
+                book.age_set.append(age)
+                book.function_set.append(func)
                 book.save()
                 if book.id:
                     return {'book_id': book.id}
