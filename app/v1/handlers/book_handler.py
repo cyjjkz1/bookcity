@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
 import traceback
 from flask import request, jsonify, abort
 from flask import current_app as app
