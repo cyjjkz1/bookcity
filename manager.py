@@ -7,7 +7,7 @@ from flask_script import Manager, Command, Server
 from flask_migrate import Migrate, MigrateCommand
 from app import db, create_app
 from app.v1 import models
-
+from pymysql import err
 app = create_app(os.getenv('FLASK_CONFIG_NAME') or 'default')
 
 manager = Manager(app)

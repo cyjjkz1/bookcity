@@ -9,6 +9,7 @@ from flask import current_app as app
 from flask_restful import Resource
 from flask import request, abort
 from app.v1.constant import RESP_CODE, RESP_ERR_MSG
+from pymysql import err
 
 
 class HandlerException(Exception):
@@ -37,6 +38,10 @@ class BaseHandler(Resource):
             else:
                 app.logger.info('func=handle| 没有返回处理结果')
 
+        except err.MySQLError as e:
+            app.logger.warn(traceback.format_exc())
+            app.logger.warn(str(e))
+            return self.request_finish(RESP_CODE.DB_ERROR, RESP_ERR_MSG.get(RESP_CODE.DB_ERROR, ''))
         except HandlerException as e:
             app.logger.warn(traceback.format_exc())
             return self.request_finish(e.respcd, resperr=e.respmsg)
