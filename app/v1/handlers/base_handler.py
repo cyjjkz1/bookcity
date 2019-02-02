@@ -38,7 +38,7 @@ class BaseHandler(Resource):
             else:
                 app.logger.info('func=handle| 没有返回处理结果')
 
-        except err.MySQLError as e:
+        except err.IntegrityError as e:
             app.logger.warn("11111111111111111111111111111111111111111111111")
             app.logger.warn(traceback.format_exc())
             app.logger.warn(str(e))
