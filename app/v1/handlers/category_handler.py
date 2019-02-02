@@ -162,7 +162,7 @@ class AgeGroupAddFuncHandler(BaseHandler):
                                            params['func_id']))
             app.logger.info('<Function>DB query result: {}'.format(func.model_to_dict(query_relation=False)))
 
-            age.functions = [func]
+            age.functions.append(func)
             age.save()
             return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''))
         except BaseException as e:
