@@ -53,7 +53,7 @@ class BookHandler(BaseHandler):
         fields=[
             OPTION_id,
             OPTION_Name,
-            OPTINON_Details,
+            OPTION_Details,
             OPTION_Stock,
             OPTION_Choicest
         ],
