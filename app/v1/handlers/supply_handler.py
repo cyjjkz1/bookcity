@@ -116,7 +116,7 @@ class SupplySelectHandler(BaseHandler):
                                        respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_QUERY_NOT_FOUND) + ' supply_id {}'.format(params['post_id']))
             app.logger.info('<PostCompany>DB query result: {}'.format(post.model_to_dict(query_relation=False)))
 
-            supply.posts = [post]
+            supply.posts = supply.posts.append(post)
             supply.save()
             return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''))
         except BaseException as e:
