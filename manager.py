@@ -2,12 +2,12 @@
 # -*- coding:utf-8 -*-
 
 import os
-import traceback
+
 from flask_script import Manager, Command, Server
 from flask_migrate import Migrate, MigrateCommand
 from app import db, create_app
 from app.v1 import models
-from pymysql import err
+
 app = create_app(os.getenv('FLASK_CONFIG_NAME') or 'default')
 
 manager = Manager(app)
@@ -25,18 +25,9 @@ class AddDB(Command):
         pass
 
 
-class RunServer(Command):
-    def run(self):
-        try:
-            Server(host='0.0.0.0', port=9090)
-        except BaseException as e:
-            app.logger.warning(traceback.format_exc())
-            app.logger.warning(str(e))
-
-
 # 自定义命令
 manager.add_command('createdb', CreateDB)
-manager.add_command('runserver', RunServer)
+manager.add_command('runserver', Server(host='0.0.0.0', port=9090))
 manager.add_command('dbmig', MigrateCommand)
 manager.add_command('adduser', AddDB)
 
