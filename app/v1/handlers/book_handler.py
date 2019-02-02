@@ -103,9 +103,9 @@ class BookHandler(BaseHandler):
                 if func is None:
                     app.logger.info('Can not find function with id = {}'.format(params['func_id']))
                     raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
-                book.supply_set.append(supply)
-                book.age_set.append(age)
-                book.function_set.append(func)
+                book.supply_set = supply
+                book.age_set = age
+                book.function_set = func
                 book.save()
                 if book.id:
                     return {'book_id': book.id}
