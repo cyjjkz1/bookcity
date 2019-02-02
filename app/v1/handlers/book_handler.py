@@ -21,8 +21,7 @@ BOOK_Stock = RequiredField('stock', converter=converter.TypeConverter(str), chec
 BOOK_Choicest = RequiredField('choicest', converter=converter.TypeConverter(str), checker=ReChecker(r'[0-1]{1}'))
 
 
-OPTION_id = OptionalField(src_name='supply_id',
-                          dst_name='id',
+OPTION_id = OptionalField(src_name='id',
                           converter=converter.TypeConverter(str),
                           checker=ReChecker(r'[0-9]{1,}'))
 OPTION_Name = OptionalField('name', checker=ReChecker(ur'([\u4e00-\u9fa5]{1,30})'))
