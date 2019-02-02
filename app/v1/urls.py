@@ -6,7 +6,7 @@ from flask_restful import Api
 from handlers.post_company_handler import PostCompanyHandler
 from handlers.supply_handler import SupplyHandler, SupplySelectHandler
 from handlers.category_handler import AgeGroupHandler, FunctionHandler, AgeGroupAddFuncHandler
-
+from handlers.book_handler import BookHandler
 bp_post = Blueprint('bp_post', __name__, url_prefix='/bookcity/v1/post_company')
 
 api_post = Api(bp_post)
@@ -46,6 +46,6 @@ bp_book = Blueprint('bp_book', __name__, url_prefix='/bookcity/v1/book')
 
 api_book = Api(bp_book)
 
-api_book.add_resource(AgeGroupHandler, '/query', endpoint='book_query')
+api_book.add_resource(BookHandler, '/query', endpoint='book_query')
 
-api_book.add_resource(AgeGroupHandler, '/add', endpoint='book_add')
+api_book.add_resource(BookHandler, '/add', endpoint='book_add')
