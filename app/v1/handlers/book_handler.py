@@ -91,9 +91,9 @@ class BookHandler(BaseHandler):
                             choicest=params['stock'],
                             )
                 # 建立关系
-                supply = Supply.query.fiter_by(id=params['supply_id']).first()
-                age = AgeGroup.query.fiter_by(id=params['age_id']).first()
-                func = Function.query.fiter_by(id=params['func_id']).first()
+                supply = Supply.query.filter_by(id=params['supply_id']).first()
+                age = AgeGroup.query.filter_by(id=params['age_id']).first()
+                func = Function.query.filter_by(id=params['func_id']).first()
                 if supply is None:
                     app.logger.info('Can not find supply with id = {}'.format(params['supply_id']))
                     raise HandlerException(respcd=RESP_CODE.DB_ERROR, respmsg=RESP_ERR_MSG.get(RESP_CODE.DB_ERROR))
