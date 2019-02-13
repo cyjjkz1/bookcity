@@ -64,7 +64,7 @@ class Book(db.Model):
             # 使用一对多的反向查询
             supply = self.supply_set
             if supply is not None:
-                book_dict['supply'] = supply.model_to_dict(query_relation=False)
+                book_dict['supply'] = supply.model_to_dict(query_relation=True)
             else:
                 book_dict['supply'] = {}
 
@@ -75,7 +75,7 @@ class Book(db.Model):
             else:
                 book_dict['age_group'] = {}
 
-            func = self.function_ag
+            func = self.function_set
             if func:
                 book_dict['function'] = func.model_to_dict(query_relation=False)
             else:
