@@ -168,3 +168,26 @@ class AgeGroupAddFuncHandler(BaseHandler):
         except BaseException as e:
             db.session.rollback()
             raise e
+
+
+class CategoryQueryHandler(BaseHandler):
+    def get(self):
+        get_ret = self.handle(())
+        if get_ret:
+            return jsonify(get_ret)
+
+    def _handle(self, *args, **kwargs):
+        """
+        无需查询参数, 要查询一个年龄段下面的分类直接按照年龄段查询
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        try:
+            age_gp = AgeGroup.query.filter().all()
+            ag_arr = []
+            for ag in age_gp:
+                ag_arr.append(ag.model_to_dict(query_relation=True))
+            return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''), data=ag_arr)
+        except BaseException as e:
+            raise e

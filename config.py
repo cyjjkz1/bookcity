@@ -6,11 +6,12 @@ import logging
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-#数据库配置
+# 数据库配置
 USERNAME = 'manager'
 PASSWORD = 'TianTian1121@@'
 HOSTNAME = 'localhost'
 DATABASE = 'bookcity'
+
 
 class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
@@ -23,14 +24,18 @@ class Config:
     # 轮转数量10个
     LOG_FILE_BACKUP_COUNT = 10
 
+
 class DevelopmentConfig(Config):
     pass
+
 
 class TestingConfig(Config):
     pass
 
+
 class ProductionConfig(Config):
     pass
+
 
 config = {
     'development': DevelopmentConfig,
