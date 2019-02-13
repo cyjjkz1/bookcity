@@ -21,7 +21,7 @@ class AgeGroup(db.Model):
                                 secondary=age_func,
                                 backref=db.backref('age_set', lazy='dynamic')
                                 )
-    books = db.relationship('Book', backref='age_set', lazy='dynamic')
+    books = db.relationship('Book', backref='age_bk', lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
@@ -57,7 +57,7 @@ class Function(db.Model):
 
     age_groups = db.relationship('AgeGroup',
                                  secondary=age_func,
-                                 backref=db.backref('function_set', lazy='dynamic')
+                                 backref=db.backref('function_ag', lazy='dynamic')
                                  )
 
     def __init__(self, name):

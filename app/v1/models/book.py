@@ -69,13 +69,13 @@ class Book(db.Model):
                 book_dict['supply'] = {}
 
         if query_category:
-            age = self.age_set
+            age = self.age_bk
             if age:
                 book_dict['age_group'] = age.model_to_dict(query_relation=False)
             else:
                 book_dict['age_group'] = {}
 
-            func = self.function_set
+            func = self.function_ag
             if func:
                 book_dict['function'] = func.model_to_dict(query_relation=False)
             else:

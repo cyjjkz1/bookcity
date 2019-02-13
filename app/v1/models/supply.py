@@ -21,7 +21,7 @@ class Supply(db.Model):
     books = db.relationship('Book', backref='supply_set', lazy='dynamic')
     posts = db.relationship('PostCompany',
                             secondary=supply_post,
-                            backref=db.backref('supply_set', lazy='dynamic'))
+                            backref=db.backref('supply_pt', lazy='dynamic'))
 
     def __init__(self, name, mobile, address):
         self.name = name
