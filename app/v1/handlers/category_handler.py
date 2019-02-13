@@ -188,6 +188,6 @@ class CategoryQueryHandler(BaseHandler):
             ag_arr = []
             for ag in age_gp:
                 ag_arr.append(ag.model_to_dict(query_relation=True))
-            return self.request_finish(RESP_CODE.SUCCESS, RESP_ERR_MSG.get(RESP_CODE.SUCCESS, ''), data=ag_arr)
+            return ag_arr
         except BaseException as e:
             raise e

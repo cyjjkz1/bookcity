@@ -45,7 +45,7 @@ api_category.add_resource(FunctionHandler, '/function/query', endpoint='func_que
 
 api_category.add_resource(FunctionHandler, '/function/add', endpoint='func_add')
 
-api_category.add_resource(CategoryQueryHandler, '/bookcity/v1/category/query', endpoint='category_query')
+api_category.add_resource(CategoryQueryHandler, '/query', endpoint='category_query')
 
 # 书籍蓝图
 bp_book = Blueprint('bp_book', __name__, url_prefix='/bookcity/v1/book')
