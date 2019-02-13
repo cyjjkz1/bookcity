@@ -40,9 +40,10 @@ class Supply(db.Model):
         }
         if query_relation:
             post_company = []
+            print type(self.posts)
             if self.posts is not None:
                 for post in self.posts:
-                    posts.append(post.model_to_dict())
+                    post_company.append(post.model_to_dict())
 
             sup_dict['posts'] = post_company
         return sup_dict
