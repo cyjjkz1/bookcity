@@ -64,7 +64,7 @@ class Book(db.Model):
             # 使用一对多的反向查询
             supply = self.supply_set
             if supply is not None:
-                book_dict['supply'] = supply.model_to_dict(query_relation=True)
+                book_dict['supply'] = supply.model_to_dict(query_relation=False)
             else:
                 book_dict['supply'] = {}
 
