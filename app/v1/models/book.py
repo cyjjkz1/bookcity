@@ -62,18 +62,24 @@ class Book(db.Model):
 
         if query_supply:
             # 使用一对多的反向查询
-            supply = self.supply_set.first()
+            supply = self.supply_set
             if supply is not None:
                 book_dict['supply'] = supply.model_to_dict(query_relation=True)
             else:
                 book_dict['supply'] = {}
 
         if query_category:
-            age = self.function_set.first()
-            if age is not None:
-                book_dict['category'] = age.model_to_dict(query_relation=True)
+            age = self.age_set
+            if age:
+                book_dict['age_group'] = age.model_to_dict(query_relation=False)
             else:
-                book_dict['category'] = {}
+                book_dict['age_group'] = {}
+
+            func = self.function_set
+            if func:
+                book_dict['function'] = func.model_to_dict(query_relation=False)
+            else:
+                book_dict['function'] = {}
         return book_dict
 
     def save(self):
